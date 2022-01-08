@@ -1,22 +1,19 @@
 from db import db
 import string
 import random
-
+import datetime
+from models.eventModel import EventModel
 class ReservationModel(db.Model):
     __tablename__   = 'reservations'
     
     id_reservation  = db.Column(db.Integer, primary_key=True)
     title           = db.Column(db.String(80))
-    startDate       = db.Column(db.String(80))
-    endDate         = db.Column(db.String(80))
     active          = db.Column(db.Boolean)
     code            = db.Column(db.String(80))
     
-    def __init__(self, title, startDate, endDate, active=True):
+    def __init__(self, title):
         self.title       = title
-        self.startDate   = startDate
-        self.endDate     = endDate
-        self.active      = active
+        self.active      = True
         self.code        = self.generate_code()
     
     def save_to_db(self):
@@ -37,10 +34,26 @@ class ReservationModel(db.Model):
         else:
             return code
     
+    def checkIfCanBeCancelled(self):
+        
+        event = EventModel.find_by_title(self.title)
+
+        dateStart = datetime.datetime.strptime(event.startDate, "%Y-%m-%dT%H:%M:%S")
+        dateEnd = datetime.datetime.strptime(event.endDate,   "%Y-%m-%dT%H:%M:%S")
+
+        timeDiff = dateEnd - dateStart
+
+        if(timeDiff>datetime.timedelta(days=2)):
+            if(dateStart-datetime.datetime.now()>datetime.timedelta(days=2)):
+                return True
+        return False
+    
+    def cancel(self):
+        self.active = False
+        self.save_to_db()
+    
     def json(self):
-        return {'title': self.title, 
-                'startDate': self.startDate, 
-                'endDate': self.endDate, 
+        return {'title': self.title,
                 'active': self.active, 
                 'code': self.code
                 }
