@@ -7,6 +7,7 @@ from resources.ReservationResource import Reservation, ReservationCreate
 from resources.EventResource import Event, EventThumbnail
 
 from create_example_events import create_example_events
+import os;os.mkdir("frontend/public/thubmnails")
 
 
 app = Flask(__name__)
