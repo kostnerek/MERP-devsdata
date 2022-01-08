@@ -7,6 +7,7 @@ class EventModel(db.Model):
     title           = db.Column(db.String(80))
     startDate       = db.Column(db.String(80))
     endDate         = db.Column(db.String(80))
+    thumbnail       = db.Column(db.String(80))
     
     def __init__(self, title, startDate, endDate):
         self.title       = title
@@ -21,11 +22,16 @@ class EventModel(db.Model):
         db.session.delete(self)
         db.session.commit()
     
+    def set_thumbnail(self, thumbnail):
+        self.thumbnail = thumbnail
+        self.save_to_db()
+    
     def json(self):
         return {
                 'title': self.title, 
                 'startDate': self.startDate, 
-                'endDate': self.endDate
+                'endDate': self.endDate,
+                'thumbnail': self.thumbnail
                 }
     
     @classmethod
