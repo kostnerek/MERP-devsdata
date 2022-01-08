@@ -1,0 +1,21 @@
+.events {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 0.3em;
+    padding: 3px;
+    justify-content: center;
+    justify-items: center;
+}
+
+.events-event {
+    text-align: center;
+}
+
+.events-event-thumbnail > img {
+    max-width: 90%;
+    max-height: 175px;
+}
+
+.events-event-register > button {
+    min-width: 75%;
+}

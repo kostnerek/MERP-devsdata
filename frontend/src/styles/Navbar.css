@@ -1,0 +1,30 @@
+.navbar {
+    background-color: rgb(255, 250, 244);
+}
+
+.navbar-logo {
+    font-size: 2em;
+    text-align: center;
+    font-family: 'Montserrat Alternates', sans-serif;
+    padding: 0.5em;
+}
+
+.navbar-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    background-color: black;
+    min-height: 2em;
+}
+
+.navbar-links > a {
+    text-decoration: none;
+    color: white;
+    transition: linear .2s;
+    text-align: center;
+}
+
+.navbar-links > a:hover {
+    color: rgb(189, 189, 189);
+}

@@ -43,7 +43,7 @@ class ReservationModel(db.Model):
 
         timeDiff = dateEnd - dateStart
 
-        if(timeDiff>datetime.timedelta(days=2)):
+        if(timeDiff>=datetime.timedelta(days=2)):
             if(dateStart-datetime.datetime.now()>datetime.timedelta(days=2)):
                 return True
         return False

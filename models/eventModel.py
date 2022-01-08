@@ -40,3 +40,6 @@ class EventModel(db.Model):
     @classmethod
     def find_by_title(cls, title)-> object:
         return cls.query.filter_by(title=title).first()
+    @classmethod 
+    def find_all(cls)-> list:
+        return cls.query.all()

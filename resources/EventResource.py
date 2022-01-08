@@ -13,7 +13,12 @@ _EVENT_PARSER.add_argument('endDate', type=str, required=True, help=default_help
 _IMAGE_PARSER = reqparse.RequestParser()
 _IMAGE_PARSER.add_argument('image', type=werkzeug.datastructures.FileStorage, location='files', required=True, help=default_help)
 
-class EventCreate(Resource):
+class Event(Resource):
+    def get(self):
+        all_events = EventModel.find_all()
+        parsed_events = [event.json() for event in all_events]
+        return {'events': parsed_events}, 200
+            
     def post(self):
         data = _EVENT_PARSER.parse_args()
         if EventModel.find_by_title(data['title']):
@@ -35,8 +40,8 @@ class EventThumbnail(Resource):
             
         data = _IMAGE_PARSER.parse_args()
         img = data['image']
-        img.save(f'thumbnails/{title}.jpg')
-        event.set_thumbnail(f'thumbnails/{title}.jpg')
+        img.save(f'frontend/public/thumbnails/{title}.jpg')
+        event.set_thumbnail(f'/thumbnails/{title}.jpg')
         return {'message': 'Thumbnail added successfully'}, 201
     
     def get(self, title):
